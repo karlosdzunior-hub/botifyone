@@ -1,5 +1,6 @@
 import { type ActionFunctionArgs } from '@remix-run/cloudflare';
 import { createDataStream, generateId } from 'ai';
+import { getOrCreateUser, deductCredit } from '~/lib/.server/db/credits.server';
 import { MAX_RESPONSE_SEGMENTS, MAX_TOKENS, type FileMap } from '~/lib/.server/llm/constants';
 import { CONTINUE_PROMPT } from '~/lib/common/prompts/prompts';
 import { streamText, type Messages, type StreamingOptions } from '~/lib/.server/llm/stream-text';
@@ -72,6 +73,31 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
   const providerSettings: Record<string, IProviderSetting> = JSON.parse(
     parseCookies(cookieHeader || '').providers || '{}',
   );
+
+  // ── Проверка и списание кредитов ──────────────────────────────────────────
+  if (chatMode === 'build') {
+    const userId = parseCookies(cookieHeader || '').botify_uid;
+
+    if (!userId) {
+      return new Response(
+        JSON.stringify({ error: true, code: 'NO_USER', message: 'Требуется идентификация. Обновите страницу.', creditsLeft: 0 }),
+        { status: 401, headers: { 'Content-Type': 'application/json' } },
+      );
+    }
+
+    getOrCreateUser(userId);
+    const result = deductCredit(userId);
+
+    if (!result.success) {
+      return new Response(
+        JSON.stringify({ error: true, code: 'NO_CREDITS', message: 'Недостаточно кредитов. Пополните баланс.', creditsLeft: 0 }),
+        { status: 402, headers: { 'Content-Type': 'application/json' } },
+      );
+    }
+
+    logger.debug(`Credits deducted for user ${userId}. Remaining: ${result.creditsLeft}`);
+  }
+  // ─────────────────────────────────────────────────────────────────────────
 
   const stream = new SwitchableStream();
 

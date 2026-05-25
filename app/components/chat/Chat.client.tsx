@@ -8,6 +8,7 @@ import { useMessageParser, usePromptEnhancer, useShortcuts } from '~/lib/hooks';
 import { description, useChatHistory } from '~/lib/persistence';
 import { chatStore } from '~/lib/stores/chat';
 import { workbenchStore } from '~/lib/stores/workbench';
+import { loadCredits } from '~/lib/stores/credits';
 import { DEFAULT_MODEL, DEFAULT_PROVIDER, PROMPT_COOKIE_KEY, PROVIDER_LIST } from '~/utils/constants';
 import { cubicEasingFn } from '~/utils/easings';
 import { createScopedLogger, renderLogger } from '~/utils/logger';
@@ -264,7 +265,15 @@ export const ChatImpl = memo(
         let errorType: LlmErrorAlertType['errorType'] = 'unknown';
         let title = 'Request Failed';
 
-        if (errorInfo.statusCode === 401 || errorInfo.message.toLowerCase().includes('api key')) {
+        if (errorInfo.statusCode === 402 || (errorInfo as any).code === 'NO_CREDITS') {
+          toast.error('⚡ Кредиты закончились — пополни баланс на странице тарифов', {
+            position: 'top-center',
+            autoClose: 6000,
+            onClick: () => window.location.href = '/pricing',
+          });
+          loadCredits();
+          return;
+        } else if (errorInfo.statusCode === 401 || errorInfo.message.toLowerCase().includes('api key')) {
           errorType = 'authentication';
           title = 'Authentication Error';
         } else if (errorInfo.statusCode === 429 || errorInfo.message.toLowerCase().includes('rate limit')) {
