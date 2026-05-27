@@ -61,13 +61,37 @@ const inlineThemeCode = stripIndents`
   }
 `;
 
+const telegramInitCode = stripIndents`
+  (function() {
+    try {
+      var tg = window.Telegram && window.Telegram.WebApp;
+      if (tg) {
+        tg.ready();
+        tg.expand();
+        tg.enableClosingConfirmation();
+        var colorScheme = tg.colorScheme;
+        if (colorScheme) {
+          var theme = colorScheme === 'dark' ? 'dark' : 'light';
+          localStorage.setItem('botify_theme', theme);
+          document.querySelector('html').setAttribute('data-theme', theme);
+        }
+      }
+    } catch(e) {}
+  })();
+`;
+
 export const Head = createHead(() => (
   <>
     <meta charSet="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <Meta />
     <Links />
+    <script src="https://telegram.org/js/telegram-web-app.js" />
     <script dangerouslySetInnerHTML={{ __html: inlineThemeCode }} />
+    <script dangerouslySetInnerHTML={{ __html: telegramInitCode }} />
   </>
 ));
 
@@ -125,13 +149,8 @@ export default function App() {
       timestamp: new Date().toISOString(),
     });
 
-    // Initialize debug logging with improved error handling
     import('./utils/debugLogger')
       .then(({ debugLogger }) => {
-        /*
-         * The debug logger initializes itself and starts disabled by default
-         * It will only start capturing when enableDebugMode() is called
-         */
         const status = debugLogger.getStatus();
         logStore.logSystem('Debug logging ready', {
           initialized: status.initialized,

@@ -1,0 +1,106 @@
+/* Telegram Mini App + мобильная адаптивность */
+
+/* Убираем bounce-scroll на iOS */
+html, body {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: manipulation;
+}
+
+/* Безопасные зоны для iPhone notch / Dynamic Island */
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+
+/* Header с учётом safe area */
+header {
+  padding-top: max(0px, var(--safe-top));
+}
+
+/* Кнопки — минимум 44px для пальцев */
+button, a[role="button"], [role="button"] {
+  min-height: 44px;
+  touch-action: manipulation;
+}
+
+/* Скрыть кнопки браузерного зума на мобиле */
+input, textarea, select {
+  font-size: 16px !important; /* предотвращает зум на iOS */
+}
+
+/* Адаптивный чат-контейнер */
+@media (max-width: 768px) {
+  /* Header компактнее */
+  [class*="h-[var(--header-height)]"] {
+    height: 52px !important;
+  }
+
+  /* Убираем sidebar на мобиле по умолчанию */
+  .sidebar-mobile-hide {
+    display: none;
+  }
+
+  /* Рабочий стол — полная высота */
+  .workbench-container {
+    height: calc(100dvh - 52px - var(--safe-bottom));
+  }
+
+  /* Модальное окно снизу на мобиле */
+  .payment-modal {
+    border-radius: 24px 24px 0 0;
+    max-height: 85dvh;
+  }
+
+  /* Textarea подстраивается */
+  textarea {
+    min-height: 44px;
+  }
+}
+
+/* Telegram WebApp специфика */
+.tg-webapp {
+  /* Используем цвета из Telegram темы */
+  --tg-bg: var(--tg-theme-bg-color, #ffffff);
+  --tg-text: var(--tg-theme-text-color, #000000);
+  --tg-hint: var(--tg-theme-hint-color, #999999);
+  --tg-link: var(--tg-theme-link-color, #2481cc);
+  --tg-button: var(--tg-theme-button-color, #2481cc);
+  --tg-button-text: var(--tg-theme-button-text-color, #ffffff);
+}
+
+/* Плавный скролл */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Убираем выделение текста при тапах */
+.no-select {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Адаптивная сетка pricing */
+@media (max-width: 640px) {
+  .pricing-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Анимация появления модалки */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-up {
+  animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
