@@ -1,0 +1,120 @@
+{
+  "users": {
+    "ed34079e-ee2e-48eb-b988-e40c5c7361ef": {
+      "user_id": "ed34079e-ee2e-48eb-b988-e40c5c7361ef",
+      "credits": 10,
+      "tier": "free",
+      "tier_expires_at": null,
+      "created_at": 1779895317
+    },
+    "cc7ada65-2f00-4e87-9df5-7a1283d36678": {
+      "user_id": "cc7ada65-2f00-4e87-9df5-7a1283d36678",
+      "credits": 10,
+      "tier": "free",
+      "tier_expires_at": null,
+      "created_at": 1779895353
+    },
+    "3e26449e-c0ed-4de3-8e26-8ec9e9f81fad": {
+      "user_id": "3e26449e-c0ed-4de3-8e26-8ec9e9f81fad",
+      "credits": 10,
+      "tier": "free",
+      "tier_expires_at": null,
+      "created_at": 1779895362
+    },
+    "bbe2d402-0e4b-4e47-9446-2dc6ae13c54d": {
+      "user_id": "bbe2d402-0e4b-4e47-9446-2dc6ae13c54d",
+      "credits": 9,
+      "tier": "free",
+      "tier_expires_at": null,
+      "created_at": 1779895681
+    },
+    "44867657-39b8-4147-95b0-109296e2182b": {
+      "user_id": "44867657-39b8-4147-95b0-109296e2182b",
+      "credits": 10,
+      "tier": "free",
+      "tier_expires_at": null,
+      "created_at": 1779896526
+    },
+    "9aacae30-8725-4a19-a292-adf7c0c32b74": {
+      "user_id": "9aacae30-8725-4a19-a292-adf7c0c32b74",
+      "credits": 10,
+      "tier": "free",
+      "tier_expires_at": null,
+      "created_at": 1779957630
+    },
+    "e88fca2d-22cb-43ee-88a2-b9515f08d275": {
+      "user_id": "e88fca2d-22cb-43ee-88a2-b9515f08d275",
+      "credits": 10,
+      "tier": "free",
+      "tier_expires_at": null,
+      "created_at": 1779957939
+    }
+  },
+  "transactions": [
+    {
+      "id": 1,
+      "user_id": "ed34079e-ee2e-48eb-b988-e40c5c7361ef",
+      "amount": 10,
+      "type": "bonus",
+      "description": "Приветственные кредиты",
+      "created_at": 1779895317
+    },
+    {
+      "id": 2,
+      "user_id": "cc7ada65-2f00-4e87-9df5-7a1283d36678",
+      "amount": 10,
+      "type": "bonus",
+      "description": "Приветственные кредиты",
+      "created_at": 1779895353
+    },
+    {
+      "id": 3,
+      "user_id": "3e26449e-c0ed-4de3-8e26-8ec9e9f81fad",
+      "amount": 10,
+      "type": "bonus",
+      "description": "Приветственные кредиты",
+      "created_at": 1779895362
+    },
+    {
+      "id": 4,
+      "user_id": "bbe2d402-0e4b-4e47-9446-2dc6ae13c54d",
+      "amount": 10,
+      "type": "bonus",
+      "description": "Приветственные кредиты",
+      "created_at": 1779895681
+    },
+    {
+      "id": 5,
+      "user_id": "44867657-39b8-4147-95b0-109296e2182b",
+      "amount": 10,
+      "type": "bonus",
+      "description": "Приветственные кредиты",
+      "created_at": 1779896526
+    },
+    {
+      "id": 6,
+      "user_id": "9aacae30-8725-4a19-a292-adf7c0c32b74",
+      "amount": 10,
+      "type": "bonus",
+      "description": "Приветственные кредиты",
+      "created_at": 1779957630
+    },
+    {
+      "id": 7,
+      "user_id": "bbe2d402-0e4b-4e47-9446-2dc6ae13c54d",
+      "amount": -1,
+      "type": "usage",
+      "description": "AI генерация",
+      "created_at": 1779957670
+    },
+    {
+      "id": 8,
+      "user_id": "e88fca2d-22cb-43ee-88a2-b9515f08d275",
+      "amount": 10,
+      "type": "bonus",
+      "description": "Приветственные кредиты",
+      "created_at": 1779957939
+    }
+  ],
+  "next_tx_id": 9
+}
